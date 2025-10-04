@@ -32,3 +32,10 @@ enum Rating: Int, CaseIterable{
         }
     }
 }
+
+//extension of Day:NsManagedObject in Core Data
+extension Day{
+    var visualRating: Rating? {
+        Rating(rawValue: Int(self.rating))
+    }
+}
