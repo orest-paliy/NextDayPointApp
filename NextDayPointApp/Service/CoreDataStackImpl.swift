@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 class CoreDataStackImpl: CoreDataStack{
-    lazy var container: NSPersistentContainer = {
+     static let container: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "NextDayPointApp")
         container.loadPersistentStores(completionHandler: {(_, error) in
             //TODO: add error handling
@@ -19,10 +19,12 @@ class CoreDataStackImpl: CoreDataStack{
     }()
     
     var context: NSManagedObjectContext{
-        container.viewContext
+        CoreDataStackImpl.container.viewContext
     }
     
     func saveContext() throws {
         try context.save()
     }
+    
+    
 }

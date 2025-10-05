@@ -10,10 +10,15 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("viewLoaded")
+            DayDotView(
+                viewModel: DayDotViewModel(
+                    date: Date.now,
+                    repository: CoreDataRepositoryImpl<Day>(
+                        coreDataStack: CoreDataStackImpl()
+                    )
+                )
+            )
         }
         .padding()
     }

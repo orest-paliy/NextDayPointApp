@@ -7,12 +7,6 @@
 
 import Foundation
 
-struct DayInfo{
-    var date: Date
-    var rating: Rating?
-    var description: String?
-}
-
 enum Rating: Int, CaseIterable{
     case terrible = 1, awful, veryBad, bad, average, fair, good, veryGood, excellent, perfect
     

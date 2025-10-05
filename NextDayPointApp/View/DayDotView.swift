@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct DayDotView: View {
-    @StateObject private var viewModel = DayDotViewModel()
+    @ObservedObject var viewModel: DayDotViewModel
     var body: some View {
         ZStack{
             if viewModel.hasCurrentDayPassed{
-                if let emoji = viewModel.dayRating.rating?.emojiReflection {
-                    Text(emoji)
+                if let dateInfo = viewModel.dayRating,
+                   let emoji = Rating(rawValue: Int(dateInfo.rating)){
+                    Text(emoji.emojiReflection)
                 }else{
                     Text("+")
                 }
@@ -31,5 +32,8 @@ struct DayDotView: View {
 }
 
 #Preview {
-    DayDotView()
+    let stack = CoreDataStackImpl()
+    let repo = CoreDataRepositoryImpl<Day>(coreDataStack: stack)
+    
+    DayDotView(viewModel: DayDotViewModel(date: Date.now, repository: repo))
 }

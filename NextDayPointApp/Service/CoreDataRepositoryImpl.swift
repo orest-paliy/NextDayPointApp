@@ -25,7 +25,10 @@ class CoreDataRepositoryImpl<T: NSManagedObject>: Repository{
     
     func fetch(by predicate: NSPredicate) throws -> [Entity] {
         let entityName = Entity.entity().name
-        guard let entityName else{ fatalError("Bad Entity") }
+        guard let entityName else{
+            print(entityName)
+            return []
+        }
         let fetchRequest = NSFetchRequest<Entity>(entityName: entityName)
         fetchRequest.predicate = predicate
         return try coreDataStack.context.fetch(fetchRequest)
@@ -38,5 +41,6 @@ class CoreDataRepositoryImpl<T: NSManagedObject>: Repository{
     
     func delete(item: Entity) throws {
         coreDataStack.context.delete(item)
+        try coreDataStack.saveContext()
     }
 }

@@ -9,8 +9,6 @@ import Foundation
 import CoreData
 
 protocol CoreDataStack{
-    var container: NSPersistentContainer {get}
     var context: NSManagedObjectContext {get}
-    
     func saveContext() throws
 }
