@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct MonthPickerView: View {
-    @StateObject var viewModel = MonthPickerViewModel()
+    @StateObject private var viewModel = MonthPickerViewModel()
+    @State private var isIncreasingMonths = false
     var body: some View {
         VStack{
             HStack{
                 selectedMonthChanger(up: false)
-                Text(viewModel.selectedMonth)
+                Text("\(viewModel.currentMonth) \(String(viewModel.currentYearIdx))")
                     .padding()
                     .italic()
                     .cornerRadius(30)
@@ -25,15 +26,14 @@ struct MonthPickerView: View {
             }
             
             //Mock of grid
-            ZStack{}
+            MonthGridView(viewModel: MonthGridViewModel(month: viewModel.currentMonthIdx, year: viewModel.currentYearIdx))
                 .frame(maxWidth: .infinity)
-                .frame(height: 200)
                 .padding()
                 .background(.gray.tertiary)
                 .cornerRadius(30)
                 .contentTransition(.interpolate)
-                .id(viewModel.idForTransition)
-                .transition(pushTransition(isNewer: viewModel.isSelectedMonthNewer))
+                .id(viewModel.id)
+                .transition(pushTransition(isNewer: isIncreasingMonths))
         }
         .padding()
         .overlay{
@@ -68,7 +68,8 @@ extension MonthPickerView{
             }
             .onTapGesture {
                 withAnimation(.bouncy){
-                    viewModel.changeSelectedMonth(up: up)
+                    viewModel.changeMonth(increase: up)
+                    isIncreasingMonths = up
                 }
             }
     }

@@ -17,23 +17,20 @@ struct DayDotView: View {
                     Text(emoji.emojiReflection)
                 }else{
                     Text("+")
+                        .foregroundStyle(viewModel.hasCurrentDayPassed ? .black : .white)
                 }
             } else{
                 Text("\(viewModel.dayInMonth)")
-                    .font(.title2)
                     .foregroundStyle(AppColor.primary.color)
             }
         }
-        .frame(width: 50, height: 50)
-        .background(.gray)
-        .cornerRadius(20)
-        .shadow(radius: 1)
+        .frame(width: 35, height: 35)
+        .background(viewModel.hasCurrentDayPassed ? .yellow : .gray)
+        .cornerRadius(15)
+        .overlay{
+            RoundedRectangle(cornerRadius: 15, style: .circular)
+                .stroke()
+        }
     }
 }
 
-#Preview {
-    let stack = CoreDataStackImpl()
-    let repo = CoreDataRepositoryImpl<Day>(coreDataStack: stack)
-    
-    DayDotView(viewModel: DayDotViewModel(date: Date.now, repository: repo))
-}

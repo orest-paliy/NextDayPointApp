@@ -12,22 +12,11 @@ final class DayDotViewModel: ObservableObject{
     @Published var dayRating: Day?
     @Published var error: Error?
     
-    private let calendar: Calendar
+    private let calendar = Calendar.current
     private let date: Date
-    private let repository: any Repository
     
-    //MARK: Mock
-    init(date: Date, repository: any Repository) {
+    init(date: Date) {
         self.date = date
-        self.repository = repository
-        calendar = Calendar.current
-        
-        let predicate = NSPredicate(format: "date == %@", date as CVarArg)
-        do{
-            dayRating = try repository.fetch(by: predicate).first as? Day
-        }catch{
-            self.error = error
-        }
     }
     
     //Calculates a specific day of the month
@@ -36,6 +25,6 @@ final class DayDotViewModel: ObservableObject{
     }
     
     var hasCurrentDayPassed: Bool {
-        dayInMonth < calendar.component(.day, from: Date.now)
+        Date.now >= date
     }
 }

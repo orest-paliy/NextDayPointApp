@@ -9,41 +9,41 @@ import Foundation
 import Combine
 
 class MonthPickerViewModel: ObservableObject{
-    @Published var selectedMonth: String = ""
-    @Published var isSelectedMonthNewer = false
-    @Published var idForTransition = UUID()
+    @Published var currentMonth: String = ""
+    @Published var currentMonthIdx: Int = 0
+    @Published var currentYearIdx: Int = 0
+    @Published var id: String = ""
     
-    private var currentMonthIndex: Int = -1
-    private var currentMonth: Date = .now
-    private let callendar = Calendar.current
+    private var calendar = Calendar.current
+    private var currentDate = Date.now
     
-    init(){
-        if let currentMonth = callendar.date(from: callendar.dateComponents([.month, .year], from: currentMonth)),
-           let currentMonthIndex = callendar.dateComponents([.month], from: currentMonth).month{
-            self.currentMonth = currentMonth
-            checkSelectedMonthStatus(currentMonthIndex)
-            selectedMonth = formatCurrentMonth()
+    init() {
+        updateIndexes()
+    }
+    
+    func changeMonth(increase: Bool){
+        let amountOfChange = increase ? 1 : -1
+        if let newDate = calendar.date(byAdding: Calendar.Component.month, value: amountOfChange, to: currentDate){
+            currentDate = newDate
+            updateIndexes()
         }
     }
     
-    func changeSelectedMonth(up: Bool){
-        if let changedMonth = callendar.date(byAdding: .month, value: up ? 1 : -1, to: currentMonth),
-           let currentMonthIndex = callendar.dateComponents([.month], from: currentMonth).month{
-            checkSelectedMonthStatus(currentMonthIndex)
-            currentMonth = changedMonth
-        }
-        selectedMonth = formatCurrentMonth()
+    func changeMonth(to date: Date){
+        currentDate = date
+        updateIndexes()
     }
     
-    func formatCurrentMonth() -> String{
-        let formater = DateFormatter()
-        formater.dateFormat = "MMMM"
-        return formater.string(from: currentMonth)
+    func updateIndexes(){
+        let dateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
+        currentMonthIdx = dateComponents.month!
+        currentYearIdx = dateComponents.year!
+        id = "\(currentMonthIdx) \(currentYearIdx)"
+        updateMonthTitle()
     }
     
-    func checkSelectedMonthStatus(_ selectedMonthIndex: Int){
-        isSelectedMonthNewer = selectedMonthIndex >= currentMonthIndex
-        currentMonthIndex = selectedMonthIndex
-        idForTransition = UUID()
+    func updateMonthTitle(){
+        let allMonths = calendar.monthSymbols
+        currentMonth = allMonths[currentMonthIdx-1]
     }
 }

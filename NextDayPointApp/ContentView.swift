@@ -10,15 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Text("viewLoaded")
-            DayDotView(
-                viewModel: DayDotViewModel(
-                    date: Date.now,
-                    repository: CoreDataRepositoryImpl<Day>(
-                        coreDataStack: CoreDataStackImpl()
-                    )
-                )
-            )
+            MonthPickerView()
         }
         .padding()
     }
