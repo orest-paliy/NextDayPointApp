@@ -9,19 +9,23 @@ import Foundation
 import Combine
 
 final class DayDotViewModel: ObservableObject{
-    var dayRating: DayInfo
-    private var calendar: Calendar
+    @Published var dayRating: Day?
+    @Published var error: Error?
+    let date: Date
     
-    //MARK: Mock
-    init() {
-        self.dayRating = DayInfo(date: Date.distantPast, rating: .perfect, description: "Mock description")
-        calendar = Calendar.current
+    private let calendar = Calendar.current
+    
+    init(date: Date, dayRating: Day?) {
+        self.date = date
+        self.dayRating = dayRating
     }
     
     //Calculates a specific day of the month
-    var dayInMonth: Int { calendar.component(.day, from: dayRating.date) }
+    var dayInMonth: Int {
+        calendar.component(.day, from: date)
+    }
     
     var hasCurrentDayPassed: Bool {
-        dayInMonth < calendar.component(.day, from: Date.now)
+        Date.now >= date
     }
 }

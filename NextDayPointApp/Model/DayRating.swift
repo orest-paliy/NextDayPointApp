@@ -7,12 +7,6 @@
 
 import Foundation
 
-struct DayInfo{
-    var date: Date
-    var rating: Rating?
-    var description: String?
-}
-
 enum Rating: Int, CaseIterable{
     case terrible = 1, awful, veryBad, bad, average, fair, good, veryGood, excellent, perfect
     
@@ -30,5 +24,12 @@ enum Rating: Int, CaseIterable{
         case .excellent: "🤩"
         case .perfect: "🌟"
         }
+    }
+}
+
+//extension of Day:NsManagedObject in Core Data
+extension Day{
+    var visualRating: Rating? {
+        Rating(rawValue: Int(self.rating))
     }
 }

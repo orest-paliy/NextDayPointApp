@@ -8,28 +8,37 @@
 import SwiftUI
 
 struct DayDotView: View {
-    @StateObject private var viewModel = DayDotViewModel()
+    @ObservedObject var viewModel: DayDotViewModel
+    @EnvironmentObject var coordinator: Coordinator
+    
     var body: some View {
         ZStack{
             if viewModel.hasCurrentDayPassed{
-                if let emoji = viewModel.dayRating.rating?.emojiReflection {
-                    Text(emoji)
+                if let dateInfo = viewModel.dayRating,
+                   let emoji = Rating(rawValue: Int(dateInfo.rating)){
+                    Text(emoji.emojiReflection)
+                        .onTapGesture {
+                            coordinator.show(sheet: .dayRater(viewModel.date, viewModel.dayRating))
+                        }
                 }else{
                     Text("+")
+                        .foregroundStyle(viewModel.hasCurrentDayPassed ? .black : .white)
+                        .onTapGesture {
+                            coordinator.show(sheet: .dayRater(viewModel.date, viewModel.dayRating))
+                        }
                 }
             } else{
                 Text("\(viewModel.dayInMonth)")
-                    .font(.title2)
                     .foregroundStyle(AppColor.primary.color)
             }
         }
-        .frame(width: 50, height: 50)
-        .background(.gray)
-        .cornerRadius(20)
-        .shadow(radius: 1)
+        .frame(width: 35, height: 35)
+        .background(viewModel.hasCurrentDayPassed ? .yellow : .gray)
+        .cornerRadius(15)
+        .overlay{
+            RoundedRectangle(cornerRadius: 15, style: .circular)
+                .stroke()
+        }
     }
 }
 
-#Preview {
-    DayDotView()
-}
