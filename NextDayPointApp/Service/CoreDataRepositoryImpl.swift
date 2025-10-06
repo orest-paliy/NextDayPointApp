@@ -26,7 +26,6 @@ class CoreDataRepositoryImpl<T: NSManagedObject>: Repository{
     func fetch(by predicate: NSPredicate) throws -> [Entity] {
         let entityName = Entity.entity().name
         guard let entityName else{
-            print(entityName)
             return []
         }
         let fetchRequest = NSFetchRequest<Entity>(entityName: entityName)

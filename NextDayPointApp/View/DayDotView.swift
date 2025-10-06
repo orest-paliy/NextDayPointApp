@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DayDotView: View {
     @ObservedObject var viewModel: DayDotViewModel
+    @EnvironmentObject var coordinator: Coordinator
+    
     var body: some View {
         ZStack{
             if viewModel.hasCurrentDayPassed{
@@ -18,6 +20,9 @@ struct DayDotView: View {
                 }else{
                     Text("+")
                         .foregroundStyle(viewModel.hasCurrentDayPassed ? .black : .white)
+                        .onTapGesture {
+                            coordinator.isSheetPresented = true
+                        }
                 }
             } else{
                 Text("\(viewModel.dayInMonth)")
