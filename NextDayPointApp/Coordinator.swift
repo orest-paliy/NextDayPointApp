@@ -11,7 +11,7 @@ import Combine
 
 final class Coordinator: ObservableObject{
     @Published var path = NavigationPath()
-    @Published var isSheetPresented: Bool = false
+    @Published var sheet: Sheet?
     
     func push(page: AppPage){
         path.append(page)
@@ -23,5 +23,9 @@ final class Coordinator: ObservableObject{
     
     func removeAll(){
         path.removeLast(path.count-1)
+    }
+    
+    func show(sheet: Sheet){
+        self.sheet = sheet
     }
 }

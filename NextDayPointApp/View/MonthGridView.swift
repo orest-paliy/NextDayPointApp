@@ -20,7 +20,7 @@ struct MonthGridView: View {
                 GridRow {
                     ForEach(viewModel.weeks[w].indices, id: \.self) { d in
                         if let cell = viewModel.weeks[w][d] {
-                            DayDotView(viewModel: DayDotViewModel(date: cell))
+                            DayDotView(viewModel: DayDotViewModel(date: cell, dayRating: viewModel.getDayInfo(fo: cell)))
                         } else {
                             Text(" ")
                         }

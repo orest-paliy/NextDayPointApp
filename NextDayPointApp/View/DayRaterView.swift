@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct DayRaterView: View {
-    @State var rating: Double = 5
-    @State var dayDescription: String = ""
     @EnvironmentObject var coordinator: Coordinator
+    @StateObject var viewModel: DayRaterViewModel<CoreDataRepository<Day>>
     var dayRating: Day?
     var body: some View {
         Section(content: {
-            RatingSliderView(value: $rating)
+            RatingSliderView(value: $viewModel.rating)
             dayDescriporView()
             Spacer()
-            Button("Add", action: {
+            Button(dayRating == nil ? "Add" : "Edit", action: {
                 //TODO: Add save or edit in DB
-                coordinator.isSheetPresented = false
+                viewModel.saveInfo()
+                coordinator.sheet = nil
             })
             .padding()
             .frame(maxWidth: .infinity)
@@ -33,18 +33,12 @@ struct DayRaterView: View {
                 .font(.title2)
         })
         .padding(.top)
-        .onAppear{
-            if let dayRating{
-                rating = Double(dayRating.rating)
-                dayDescription = dayRating.description
-            }
-        }
     }
     
     
     @ViewBuilder
     func dayDescriporView() -> some View{
-        TextField("Day description (optional)", text: $dayDescription)
+        TextField("Day description (optional)", text: $viewModel.dayDescription)
             .textFieldStyle(.plain)
             .padding()
             .overlay(content: {
@@ -57,5 +51,5 @@ struct DayRaterView: View {
 }
 
 #Preview {
-    DayRaterView()
+    //DayRaterView()
 }

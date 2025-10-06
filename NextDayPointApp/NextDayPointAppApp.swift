@@ -18,11 +18,13 @@ struct NextDayPointAppApp: App {
                         page in
                         page.view
                     })
-                    .sheet(isPresented: $coordinator.isSheetPresented, content: {
-                        DayRaterView()
-                            .presentationDetents([.medium])
-                            .presentationDragIndicator(.visible)
-                            .presentationBackground(.regularMaterial)
+                    .sheet(item: $coordinator.sheet, content: {value in
+                        if case let .dayRater(date, day) = value{
+                            DayRaterView(viewModel: DayRaterViewModel(repository: CoreDataRepository<Day>(), date: date, day: day))
+                                .presentationDetents([.medium])
+                                .presentationDragIndicator(.visible)
+                                .presentationBackground(.regularMaterial)
+                        }
                     })
                     .environmentObject(coordinator)
             }

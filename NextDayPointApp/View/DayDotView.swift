@@ -17,11 +17,14 @@ struct DayDotView: View {
                 if let dateInfo = viewModel.dayRating,
                    let emoji = Rating(rawValue: Int(dateInfo.rating)){
                     Text(emoji.emojiReflection)
+                        .onTapGesture {
+                            coordinator.show(sheet: .dayRater(viewModel.date, viewModel.dayRating))
+                        }
                 }else{
                     Text("+")
                         .foregroundStyle(viewModel.hasCurrentDayPassed ? .black : .white)
                         .onTapGesture {
-                            coordinator.isSheetPresented = true
+                            coordinator.show(sheet: .dayRater(viewModel.date, viewModel.dayRating))
                         }
                 }
             } else{

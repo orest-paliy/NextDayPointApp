@@ -6,15 +6,8 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		4B2B48E32E92564000AFE0FC /* Day+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2B48E12E92564000AFE0FC /* Day+CoreDataClass.swift */; };
-		4B2B48E42E92564000AFE0FC /* Day+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2B48E22E92564000AFE0FC /* Day+CoreDataProperties.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		4B2B487F2E9138A400AFE0FC /* NextDayPointApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextDayPointApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B2B48E12E92564000AFE0FC /* Day+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day+CoreDataClass.swift"; sourceTree = "<group>"; };
-		4B2B48E22E92564000AFE0FC /* Day+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Day+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -39,8 +32,6 @@
 		4B2B48762E9138A400AFE0FC = {
 			isa = PBXGroup;
 			children = (
-				4B2B48E12E92564000AFE0FC /* Day+CoreDataClass.swift */,
-				4B2B48E22E92564000AFE0FC /* Day+CoreDataProperties.swift */,
 				4B2B48812E9138A400AFE0FC /* NextDayPointApp */,
 				4B2B48802E9138A400AFE0FC /* Products */,
 			);
@@ -128,8 +119,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B2B48E32E92564000AFE0FC /* Day+CoreDataClass.swift in Sources */,
-				4B2B48E42E92564000AFE0FC /* Day+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

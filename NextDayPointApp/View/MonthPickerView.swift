@@ -44,11 +44,11 @@ struct MonthPickerView: View {
     }
     
     private func pushTransition(isNewer: Bool) -> AnyTransition {
-        let insertEdge: Edge = isNewer ? .leading : .trailing
-        let removeEdge: Edge = isNewer ? .trailing  : .leading
+        let insertEdge: Edge = isNewer ? .trailing : .leading
+        let removeEdge: Edge = isNewer ? .leading  : .trailing
         return .asymmetric(
-            insertion: .move(edge: insertEdge).combined(with: .opacity),
-            removal: .move(edge: removeEdge).combined(with: .opacity)
+            insertion: .move(edge: insertEdge).combined(with: .scale),
+            removal: .move(edge: removeEdge).combined(with: .scale).combined(with: .opacity),
         )
     }
 }

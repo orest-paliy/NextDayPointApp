@@ -11,12 +11,13 @@ import Combine
 final class DayDotViewModel: ObservableObject{
     @Published var dayRating: Day?
     @Published var error: Error?
+    let date: Date
     
     private let calendar = Calendar.current
-    private let date: Date
     
-    init(date: Date) {
+    init(date: Date, dayRating: Day?) {
         self.date = date
+        self.dayRating = dayRating
     }
     
     //Calculates a specific day of the month

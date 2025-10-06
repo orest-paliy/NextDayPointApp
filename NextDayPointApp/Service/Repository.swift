@@ -14,6 +14,6 @@ protocol Repository{
     //MARK: CRUD
     func create(configure: (Entity) -> Void) throws
     func fetch(by predicate: NSPredicate) throws -> [Entity]
-    func update(item: Entity) throws
+    func update() throws
     func delete(item: Entity) throws
 }
