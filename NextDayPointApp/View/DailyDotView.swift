@@ -33,7 +33,7 @@ struct DailyDotView: View {
             }
         }
         .frame(width: 35, height: 35)
-        .background(viewModel.hasCurrentDayPassed ? .yellow : .gray)
+        .background(viewModel.getBackgroundColor())
         .cornerRadius(15)
         .overlay{
             RoundedRectangle(cornerRadius: 15, style: .circular)

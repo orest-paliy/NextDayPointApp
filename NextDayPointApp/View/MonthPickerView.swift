@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MonthPickerView: View {
+    @StateObject private var dayStorage = DayStorage()
     @StateObject private var viewModel = MonthPickerViewModel()
     @State private var isIncreasingMonths = false
     var body: some View {
@@ -26,7 +27,7 @@ struct MonthPickerView: View {
             }
             
             //Mock of grid
-            CalendarGridView(viewModel: CalendarGridViewModel(month: viewModel.currentMonthIdx, year: viewModel.currentYearIdx))
+            CalendarGridView(dayStorage: dayStorage, viewModel: CalendarGridViewModel(month: viewModel.currentMonthIdx, year: viewModel.currentYearIdx, storage: dayStorage))
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(.gray.tertiary)
@@ -34,13 +35,27 @@ struct MonthPickerView: View {
                 .contentTransition(.interpolate)
                 .id(viewModel.id)
                 .transition(pushTransition(isNewer: isIncreasingMonths))
+                .onChange(of: viewModel.id, {
+                    loadStorage()
+                })
         }
         .padding()
         .overlay{
             RoundedRectangle(cornerRadius: 40, style: .circular)
                 .stroke(style: .init(dash: [10, 5]))
         }
+        .onAppear{
+            loadStorage()
+        }
         .padding()
+        
+        SectorChartView(storage: dayStorage)
+            .id(viewModel.id)
+            .transition(.scale)
+    }
+    
+    private func loadStorage(){
+            dayStorage.loadAllRatingsFor(month: viewModel.currentMonthIdx, year: viewModel.currentYearIdx)
     }
     
     private func pushTransition(isNewer: Bool) -> AnyTransition {

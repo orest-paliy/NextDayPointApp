@@ -7,23 +7,23 @@
 
 import Foundation
 import Combine
-    
+import SwiftUI
+
 final class CalendarGridViewModel: ObservableObject {
-    @Published var filledDays: [Day] = []
+    @Published var items: [Day] = []
     let month: Int
     let year: Int
-    private let calendar: Calendar
-    let repository = CoreDataRepository<Day>()
+    private var calendar: Calendar
+    private var storage: DayStorage
 
-    init(month: Int, year: Int, calendar: Calendar = {
-        var calendar = Calendar.current
-        calendar.firstWeekday = 2
-        return calendar
-    }()) {
+    init(month: Int, year: Int, storage: DayStorage) {
         self.month = month
         self.year = year
-        self.calendar = calendar
-        filledDays = loadAllRatingsFor(month: month, year: year)
+        self.calendar = Calendar.current
+        self.calendar.firstWeekday = 2
+        self.storage = storage
+        
+        self.storage.$daysOfMonth.receive(on: DispatchQueue.main).assign(to: &$items)
     }
 
     var daysOfWeek: [String] {
@@ -59,30 +59,8 @@ final class CalendarGridViewModel: ObservableObject {
             Array(cells[$0..<min($0+7, cells.count)])
         }
     }
-    
-    func loadAllRatingsFor(month: Int, year: Int) -> [Day]{
-        let calendar = Calendar.current
-        
-        //Start of month
-        let startComponents = DateComponents(year: year, month: month)
-        guard let startDate = calendar.date(from: startComponents) else {return []}
-        
-        //End of month
-        var endComponents = DateComponents(year: year, month: month+1)
-        endComponents.second = -1
-        guard let endDate = calendar.date(from: endComponents) else {return []}
-        
-        //Fetch request
-        do{
-           return try repository.fetch(by: NSPredicate(format: "date >= %@ AND date <= %@",
-                                            startDate as NSDate,
-                                            endDate as NSDate))
-        }catch{
-            return []
-        }
-    }
-    
+
     func getDayInfo(fo date: Date) -> Day?{
-        filledDays.filter({$0.date == date}).first
+        storage.daysOfMonth.filter({$0.date == date}).first
     }
 }

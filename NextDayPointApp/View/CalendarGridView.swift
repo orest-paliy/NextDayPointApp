@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CalendarGridView: View {
-    let viewModel: CalendarGridViewModel
+    @ObservedObject var dayStorage: DayStorage
+    @ObservedObject var viewModel: CalendarGridViewModel
 
     var body: some View {
         Grid {
@@ -20,7 +21,7 @@ struct CalendarGridView: View {
                 GridRow {
                     ForEach(viewModel.weeks[w].indices, id: \.self) { d in
                         if let cell = viewModel.weeks[w][d] {
-                            DailyDotView(viewModel: DailyDotViewModel(date: cell, dayRating: viewModel.getDayInfo(fo: cell)))
+                            DailyDotView(viewModel: DailyDotViewModel(date: cell, storage: dayStorage))
                         } else {
                             Text(" ")
                         }
@@ -32,5 +33,5 @@ struct CalendarGridView: View {
 }
 
 #Preview {
-    CalendarGridView(viewModel: .init(month: 1, year: 2025))
+    //CalendarGridView(viewModel: .init(month: 1, year: 2025))
 }

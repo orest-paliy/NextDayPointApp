@@ -16,7 +16,7 @@ struct RaterView: View {
             RatingSliderView(value: $viewModel.rating)
             dayDescriporView()
             Spacer()
-            Button(dayRating == nil ? "Add" : "Edit", action: {
+            Button(viewModel.dayInfo == nil ? "Add" : "Edit", action: {
                 //TODO: Add save or edit in DB
                 viewModel.saveInfo()
                 coordinator.sheet = nil
@@ -51,5 +51,5 @@ struct RaterView: View {
 }
 
 #Preview {
-    //DayRaterView()
+//    RaterView(viewModel: RaterViewModel(repository: CoreDataRepository(), viewModel: DailyDotViewModel(date: Date.now, dayRating: nil)))
 }

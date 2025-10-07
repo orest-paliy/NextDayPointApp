@@ -12,6 +12,7 @@ import Combine
 final class RaterViewModel<R: Repository>: ObservableObject where R.Entity == Day{
     @Published var rating: Double = 5
     @Published var dayDescription: String = ""
+    @Published var dayInfo: Day?
     var dotViewModel: DailyDotViewModel?
     let repository: R
     private var date: Date
@@ -40,6 +41,7 @@ final class RaterViewModel<R: Repository>: ObservableObject where R.Entity == Da
     init(repository: R, viewModel: DailyDotViewModel){
         self.date = viewModel.date
         self.dotViewModel = viewModel
+        self.dayInfo = viewModel.dayRating
         self.repository = repository
         if let day = viewModel.dayRating{
             rating = Double(day.rating)

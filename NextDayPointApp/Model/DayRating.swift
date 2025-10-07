@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum Rating: Int, CaseIterable{
     case terrible = 1, awful, veryBad, bad, average, fair, good, veryGood, excellent, perfect
@@ -23,6 +24,31 @@ enum Rating: Int, CaseIterable{
         case .veryGood: "😃"
         case .excellent: "🤩"
         case .perfect: "🌟"
+        }
+    }
+    
+    var colorReflection: Color {
+        switch self {
+        case .terrible:
+            return .black
+        case .awful:
+            return .red
+        case .veryBad:
+            return .orange
+        case .bad:
+            return .brown
+        case .average:
+            return .gray
+        case .fair:
+            return .yellow
+        case .good:
+            return .mint
+        case .veryGood:
+            return .teal
+        case .excellent:
+            return .blue
+        case .perfect:
+            return .green
         }
     }
 }

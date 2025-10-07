@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class MonthPickerViewModel: ObservableObject{
+final class MonthPickerViewModel: ObservableObject{
     @Published var currentMonth: String = ""
     @Published var currentMonthIdx: Int = 0
     @Published var currentYearIdx: Int = 0
@@ -16,7 +16,6 @@ class MonthPickerViewModel: ObservableObject{
     
     private var calendar = Calendar.current
     private var currentDate = Date.now
-    
     init() {
         updateIndexes()
     }
