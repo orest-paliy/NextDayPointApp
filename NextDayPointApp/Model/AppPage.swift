@@ -25,10 +25,10 @@ enum AppPage{
 enum Sheet: Identifiable{
     var id: String {
         switch self{
-        case let .dayRater(date, day):
-            return String(date.timeIntervalSince1970)
+        case let .dayRater(viewModel):
+            return String(viewModel.date.timeIntervalSince1970)
         }
     }
     
-    case dayRater(Date, Day?)
+    case dayRater(DailyDotViewModel)
 }

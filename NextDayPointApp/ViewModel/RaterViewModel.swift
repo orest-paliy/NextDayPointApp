@@ -9,15 +9,15 @@ import Foundation
 import Combine
 
 
-final class DayRaterViewModel<R: Repository>: ObservableObject where R.Entity == Day{
+final class RaterViewModel<R: Repository>: ObservableObject where R.Entity == Day{
     @Published var rating: Double = 5
     @Published var dayDescription: String = ""
+    var dotViewModel: DailyDotViewModel?
     let repository: R
-    private var day: Day?
     private var date: Date
     
     func saveInfo(){
-        if let day{
+        if let day = dotViewModel?.dayRating{
             day.rating = Int16(rating)
             day.dayDescription = dayDescription
             do{
@@ -29,16 +29,19 @@ final class DayRaterViewModel<R: Repository>: ObservableObject where R.Entity ==
                     dayInfo.rating = Int16(rating)
                     dayInfo.dayDescription = dayDescription
                     dayInfo.date = date
+                    if let vm = dotViewModel{
+                        vm.dayRating = dayInfo
+                    }
                 })
             }catch {}
         }
     }
     
-    init(repository: R, date: Date, day: Day?){
-        self.date = date
-        self.day = day
+    init(repository: R, viewModel: DailyDotViewModel){
+        self.date = viewModel.date
+        self.dotViewModel = viewModel
         self.repository = repository
-        if let day{
+        if let day = viewModel.dayRating{
             rating = Double(day.rating)
             dayDescription = day.dayDescription ?? ""
         }

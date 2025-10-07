@@ -26,7 +26,7 @@ struct MonthPickerView: View {
             }
             
             //Mock of grid
-            MonthGridView(viewModel: MonthGridViewModel(month: viewModel.currentMonthIdx, year: viewModel.currentYearIdx))
+            CalendarGridView(viewModel: CalendarGridViewModel(month: viewModel.currentMonthIdx, year: viewModel.currentYearIdx))
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(.gray.tertiary)

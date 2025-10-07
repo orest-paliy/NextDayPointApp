@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class DayDotViewModel: ObservableObject{
+final class DailyDotViewModel: ObservableObject{
     @Published var dayRating: Day?
     @Published var error: Error?
     let date: Date

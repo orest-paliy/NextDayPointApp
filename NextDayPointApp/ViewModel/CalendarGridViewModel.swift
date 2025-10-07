@@ -8,7 +8,7 @@
 import Foundation
 import Combine
     
-final class MonthGridViewModel: ObservableObject {
+final class CalendarGridViewModel: ObservableObject {
     @Published var filledDays: [Day] = []
     let month: Int
     let year: Int

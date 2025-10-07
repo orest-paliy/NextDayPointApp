@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct DayRaterView: View {
+struct RaterView: View {
     @EnvironmentObject var coordinator: Coordinator
-    @StateObject var viewModel: DayRaterViewModel<CoreDataRepository<Day>>
+    @StateObject var viewModel: RaterViewModel<CoreDataRepository<Day>>
     var dayRating: Day?
     var body: some View {
         Section(content: {

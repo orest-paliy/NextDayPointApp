@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct DayDotView: View {
-    @ObservedObject var viewModel: DayDotViewModel
+struct DailyDotView: View {
+    @ObservedObject var viewModel: DailyDotViewModel
     @EnvironmentObject var coordinator: Coordinator
     
     var body: some View {
@@ -18,13 +18,13 @@ struct DayDotView: View {
                    let emoji = Rating(rawValue: Int(dateInfo.rating)){
                     Text(emoji.emojiReflection)
                         .onTapGesture {
-                            coordinator.show(sheet: .dayRater(viewModel.date, viewModel.dayRating))
+                            coordinator.show(sheet: .dayRater(viewModel))
                         }
                 }else{
                     Text("+")
                         .foregroundStyle(viewModel.hasCurrentDayPassed ? .black : .white)
                         .onTapGesture {
-                            coordinator.show(sheet: .dayRater(viewModel.date, viewModel.dayRating))
+                            coordinator.show(sheet: .dayRater(viewModel))
                         }
                 }
             } else{

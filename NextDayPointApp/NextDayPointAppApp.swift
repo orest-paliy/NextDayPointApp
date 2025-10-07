@@ -19,8 +19,8 @@ struct NextDayPointAppApp: App {
                         page.view
                     })
                     .sheet(item: $coordinator.sheet, content: {value in
-                        if case let .dayRater(date, day) = value{
-                            DayRaterView(viewModel: DayRaterViewModel(repository: CoreDataRepository<Day>(), date: date, day: day))
+                        if case let .dayRater(viewModel) = value{
+                            RaterView(viewModel: RaterViewModel(repository: CoreDataRepository<Day>(), viewModel: viewModel))
                                 .presentationDetents([.medium])
                                 .presentationDragIndicator(.visible)
                                 .presentationBackground(.regularMaterial)
